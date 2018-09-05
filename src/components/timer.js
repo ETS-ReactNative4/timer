@@ -1,5 +1,7 @@
 import React from 'react';
 import "./index.css";
+import {connect} from 'react-redux';
+import {toggleRun} from '../actions/toggleRunning';
 
 const mapStateToProps = state => {
   return {
@@ -7,16 +9,47 @@ const mapStateToProps = state => {
   }
 }
 
-const Timer = (index) => {
-  btn = () => {
-    
+const mapDispatchToProps = dispatch => {
+  return {
+    toggleRun: obj => dispatch(toggleRun(obj))
+  };
+};
+
+export class Timercomp extends React.Component{
+  constructor(){super();}
+
+  state = {e:"HELLO"};
+
+  componentDidMount = () => {
+    let i = this.props.data;
+    this.setState({e:i});
   }
-  return(
-    <div class="cont">
-      <h2 class="bold">{props.obj.name} </h2>
-      <p class="data">{props.obj.hours}:{props.obj.minutes}:{props.obj.seconds}</p>
-      {btn()}
-  </div>
+
+  toggle = () => {
+    let x = this.state.e.name;
+    this.props.toggleRun(x);
+  }
+
+  btn = (i) => {
+    if (i === true) {
+      return <button class = "red btn" onClick={this.toggle}> Stop </button>
+    }else{
+      return <button class = "green btn" onClick = {this.toggle}> Stop </button>
+    }
+  }
+
+  render = () => {
+    return(
+      <div class = "cont ctr">
+        <h2 class="bold" > {this.state.e.name}</h2> 
+        <p class="ctr" > {this.state.e.hours}:{this.state.e.minutes}:{this.state.e.seconds} </p> 
+        {this.btn(this.state.e.running)}
+        <p> </p> 
+      </div>
+    )
+  }
 }
 
-export default Timer
+const Timer = connect(mapStateToProps,mapDispatchToProps)(Timercomp);
+
+export default Timer;

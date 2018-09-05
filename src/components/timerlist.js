@@ -1,38 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import "./index.css"
+import Timer from "./timer"
+const uuidv1 = require('uuid/v1');
 
 const mapStateToProps = state => {
-    return {times:state.times}
-}
-
-const btn = (i) => {
-    if (i === true) {
-        return <button class = "red btn" > Stop </button>
-    } else {
-        return <button class = "green btn" > Stop </button>
-    }
+  return {times:state.times}
 }
 
 const ConnectedList = (times) => {
-    let cnt = 0
-    return(
-        <div>
-            {
-                times.times.map(e=>{
-                    {cnt=cnt+1}
-                    return(
-                        <div class="cont ctr">
-                            <h2 class="bold">{e.name}</h2> 
-                            <p class="ctr">{e.hours}:{e.minutes}:{e.seconds}</p>
-                            {btn(e.running)} 
-                            <p></p>
-                        </div>
-                    )
-                })
-            }
-        </div>
-    );
+  let cnt = 0
+  return(
+    <div>
+      {
+        times.times.map(e=>{
+          {cnt=cnt+1}
+          return(
+            <Timer key={uuidv1()} data={e}></Timer>
+          )
+        })
+      }
+    </div>
+  );
 };
 
 const List = connect(mapStateToProps)(ConnectedList);
