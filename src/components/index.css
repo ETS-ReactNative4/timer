@@ -1,0 +1,44 @@
+.plus{
+    font-size:20;
+}
+.bold{
+    font-size:20;
+    font-weight:bold;
+}
+.cont{
+    border-style:solid;
+}
+.ctr{
+    text-align:center;
+}
+.red{
+     background-color: #DD0000;
+     border: none;
+     border-radius: 15px;
+     box-shadow: 0 9px #999;
+}
+.red:active{
+    background-color: #AA0000;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+.green:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+.btn {
+    font-size: 24px;
+    width:10em;
+    height:2em;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #FFFFFF;
+}
+.green{
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}
