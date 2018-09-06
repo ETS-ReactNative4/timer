@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import List from "./timerlist";
 import "./index.css";
 import {addTime} from "../actions/addTime";
+const uuidv1 = require('uuid/v1');
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -12,6 +13,7 @@ const mapDispatchToProps = dispatch => {
 
 export class DashboardArray extends React.Component{
   constructor(){super();}
+  
   handlesubmit = () => {
     this.props.addTime({
       name: "COMPLETE COMPONENT",
@@ -19,6 +21,7 @@ export class DashboardArray extends React.Component{
       minutes: 0,
       seconds: 0,
       running: false,
+      id:uuidv1().toString(),
     });
   }
 
