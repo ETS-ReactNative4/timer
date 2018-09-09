@@ -4,6 +4,7 @@ import {Provider} from "react-redux";
 import Dashboard from "./components/dashboard";
 
 class App extends React.Component {
+
   render() {
     return (
       <div>

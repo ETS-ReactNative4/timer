@@ -7,7 +7,7 @@ const initialState = {
         hours:0,
         minutes:0,
         seconds:0,
-        running:true,
+        running:false,
         id:uuidv1().toString(),
     },{
         name: "Cake baking",
@@ -25,7 +25,7 @@ const rootReducer = (state = initialState, action) => {
             return {...state, times:[...state.times, action.payload]};
         case "TOGGLE_RUNNING":
             return {...state, times:[...state.times.map(i => {
-                if(i.name === action.payload){
+                if(i.id === action.payload){
                     if (i.running === true){i.running=false;}
                     else{i.running=true}
                 }
@@ -40,6 +40,15 @@ const rootReducer = (state = initialState, action) => {
             return { ...state,times: [...state.times.map(i => {
                 if (action.payload[0] === i.id){
                     i.name=action.payload[1];
+                }
+                return i;
+            })]};
+        case "INCREMENT_TIME":
+            return {...state,times:[ ...state.times.map(i => {
+                if(action.payload === i.id){
+                    i.seconds+=1
+                    if(i.seconds==60){i.seconds=0;i.minutes+=1;}
+                    if(i.minutes==60){i.minutes=0;i.hours+=1;}
                 }
                 return i;
             })]};

@@ -3,7 +3,8 @@ import "./index.css";
 import {connect} from 'react-redux';
 import {toggleRun} from '../actions/toggleRunning';
 import {deleteTimer} from '../actions/deleteTimer';
-import {ChangeName} from '../actions/changename';
+import {changeName} from '../actions/changeName';
+import {incrementTime} from '../actions/incrementTime';
 const uuidv1 = require('uuid/v1');
 
 const mapStateToProps = state => {
@@ -16,7 +17,8 @@ const mapDispatchToProps = dispatch => {
   return {
     toggleRun: obj => dispatch(toggleRun(obj)),
     deleteTimer: obj => dispatch(deleteTimer(obj)),
-    rename: obj => dispatch(ChangeName(obj)),
+    rename: obj => dispatch(changeName(obj)),
+    increase: obj => dispatch(incrementTime(obj)),
   };
 };
 
@@ -30,16 +32,33 @@ const cnv = (e) => {
 export class Timercomp extends React.Component{
   constructor(){super();}
 
-  state = {e:"HELLO"};
+  state = {
+    e:"HELLO",
+  };
 
   componentDidMount = () => {
     let i = this.props.data;
-    this.setState({e:i});
+    this.setState({
+      e: i,
+    });
+  }
+
+  update = () => {
+    if(this.state.e.running === false){
+      return;
+    }
+    setTimeout(() => {
+      this.props.increase(this.state.e.id);
+      this.update();
+    },1000);
   }
 
   toggle = () => {
-    let x = this.state.e.name;
+    let x = this.state.e.id;
     this.props.toggleRun(x);
+    if(this.state.e.running){
+      this.update();
+    }
   }
 
   delete = () =>{
