@@ -41,10 +41,16 @@ const rootReducer = (state = initialState, action) => {
                 return i;
             })]};
         case "DELETE_TIMER":
-            return {...state,times:[...state.times.filter(i => {
-                if (i.id !== action.payload){return true}
-                else {return false};
-            })]};
+            return {...state,
+                times:[...state.times.filter(i => {
+                    if (i.id !== action.payload){return true}
+                    else {return false};
+                })],
+                names:[...state.names.filter(i => {
+                    if (i.id !== action.payload) {return true}
+                    else{return false};
+                })],
+            };
         case "CHANGE_NAME":
             return { ...state,names: [...state.names.map(i => {
                 if (action.payload[0] === i.id){
