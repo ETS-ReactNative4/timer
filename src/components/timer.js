@@ -7,12 +7,6 @@ import {changeName} from '../actions/changeName';
 import {incrementTime} from '../actions/incrementTime';
 const uuidv1 = require('uuid/v1');
 
-const mapStateToProps = state => {
-  return {
-    times: state.times
-  }
-}
-
 const mapDispatchToProps = dispatch => {
   return {
     toggleRun: obj => dispatch(toggleRun(obj)),
@@ -21,6 +15,13 @@ const mapDispatchToProps = dispatch => {
     increase: obj => dispatch(incrementTime(obj)),
   };
 };
+
+const mapStateToProps = state => {
+  return {
+    times: state.times,
+    names: state.names
+  }
+}
 
 const cnv = (e) => {
   if(null==e)return "00";
@@ -37,17 +38,23 @@ export class Timercomp extends React.Component{
   };
 
   componentDidMount = () => {
-    let i = this.props.data;
+    let i = this.props.times.filter((e)=>{
+      return e.id === this.props.iden;
+    });
+    let N = this.props.names.filter((e) => {
+      return e.id === this.props.iden;
+    })
     this.setState({
-      e: i,
+      e: i[0],
+      name:N[0].name,
     });
   }
 
   update = () => {
-    if(this.state.e.running === false){
-      return;
-    }
     setTimeout(() => {
+      if (this.state.e.running === false) {
+        return;
+      }
       this.props.increase(this.state.e.id);
       this.update();
     },1000);
@@ -68,6 +75,7 @@ export class Timercomp extends React.Component{
 
   rename = () => {
     let x = this.state.e.id;
+    if(this.state.e.running)this.props.toggleRun(x);
     this.props.rename([x, "COMPLETE COMPONENT"])
   }
 
@@ -82,7 +90,7 @@ export class Timercomp extends React.Component{
   render = () => {
     return(
       <div class = "cont ctr">
-        <h2 class="bold" > {this.state.e.name}</h2> 
+        <h2 class="bold" > {this.state.name}</h2> 
         <p class="ctr" > {cnv(this.state.e.hours)}:{cnv(this.state.e.minutes)}:{cnv(this.state.e.seconds)} </p> 
         {this.btn(this.state.e.running)}
         <p> </p> 

@@ -19,7 +19,7 @@ export class RenameWindow extends React.Component{
 
   handleSubmit = (event) => {
     console.log(this.state.name);
-    this.props.changeName([this.props.data.id,this.state.name]);
+    this.props.changeName([this.props.iden,this.state.name]);
   }
   
   render = () => {
@@ -37,5 +37,4 @@ export class RenameWindow extends React.Component{
 }
 
 const Rename = connect(null,mapDispatchToProps)(RenameWindow)
-
 export default Rename;

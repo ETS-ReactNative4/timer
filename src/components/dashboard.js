@@ -15,14 +15,17 @@ export class DashboardArray extends React.Component{
   constructor(){super();}
   
   handlesubmit = () => {
-    this.props.addTime({
-      name: "COMPLETE COMPONENT",
+    const a = uuidv1().toString();
+    this.props.addTime([{
       hours: 0,
       minutes: 0,
       seconds: 0,
       running: false,
-      id:uuidv1().toString(),
-    });
+      id:a,
+    },{
+      id:a,
+      name: "COMPLETE COMPONENT",
+    }]);
   }
 
   render = () => {

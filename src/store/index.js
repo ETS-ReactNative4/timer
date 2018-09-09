@@ -1,28 +1,37 @@
 import {createStore} from "redux";
 const uuidv1 = require('uuid/v1');
-
+let a = uuidv1().toString()
+let b = uuidv1().toString()
 const initialState = {
     times: [{
-        name:"EGG BOILING",
         hours:0,
         minutes:0,
         seconds:0,
         running:false,
-        id:uuidv1().toString(),
+        id:a
     },{
-        name: "Cake baking",
         hours: 0,
         minutes: 0,
         seconds: 0,
         running: false,
-        id:uuidv1().toString(),
-    }]
+        id:b,
+    }],
+    names:[{
+        id:a,
+        name: "EGG BOILING",
+    },{
+        id:b,
+        name: "Cake baking",
+    }],
 };
 
 const rootReducer = (state = initialState, action) => {
     switch(action.type){
         case "ADD_TIME":
-            return {...state, times:[...state.times, action.payload]};
+            return {...state, 
+                times:[...state.times, action.payload[0]], 
+                names:[...state.names,action.payload[1]],
+            };
         case "TOGGLE_RUNNING":
             return {...state, times:[...state.times.map(i => {
                 if(i.id === action.payload){
@@ -37,9 +46,9 @@ const rootReducer = (state = initialState, action) => {
                 else {return false};
             })]};
         case "CHANGE_NAME":
-            return { ...state,times: [...state.times.map(i => {
+            return { ...state,names: [...state.names.map(i => {
                 if (action.payload[0] === i.id){
-                    i.name=action.payload[1];
+                    i.name = action.payload[1];
                 }
                 return i;
             })]};
