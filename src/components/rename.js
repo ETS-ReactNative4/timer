@@ -1,12 +1,7 @@
 import React from 'react';
-import {changeName} from '../actions/changeName';
+import changeName from '../actions/actions-changeName';
 import {connect} from 'react-redux';
-
-const mapDispatchToProps = dispatch => {
-  return {
-    changeName: obj => dispatch(changeName(obj))
-  };
-};
+import {bindActionCreators} from 'redux';
 
 export class RenameWindow extends React.Component{
   state = {
@@ -18,7 +13,6 @@ export class RenameWindow extends React.Component{
   }
 
   handleSubmit = (event) => {
-    console.log(this.state.name);
     this.props.changeName([this.props.iden,this.state.name]);
   }
   
@@ -36,5 +30,11 @@ export class RenameWindow extends React.Component{
   }
 }
 
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({changeName},dispatch);
+};
+
 const Rename = connect(null,mapDispatchToProps)(RenameWindow)
+
 export default Rename;

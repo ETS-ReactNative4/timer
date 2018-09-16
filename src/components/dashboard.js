@@ -2,14 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import List from "./timerlist";
 import "./index.css";
-import {addTime} from "../actions/addTime";
+import { bindActionCreators } from 'redux';
+import addTime from '../actions/actions-addTime';
 const uuidv1 = require('uuid/v1');
-
-const mapDispatchToProps = dispatch => {
-    return {
-        addTime: obj => dispatch(addTime(obj))
-    };
-};
 
 export class DashboardArray extends React.Component{
   constructor(){super();}
@@ -37,6 +32,10 @@ export class DashboardArray extends React.Component{
       </div>
     )
   }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({addTime},dispatch);
 };
 
 const Dashboard = connect(null,mapDispatchToProps)(DashboardArray);

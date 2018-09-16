@@ -1,15 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import "./index.css"
-import Timer from "./timer"
-import Rename from "./rename";
+import "./index.css";
+import Timer from './timer';
+import Rename from './rename'
 const uuidv1 = require('uuid/v1');
-
-const mapStateToProps = state => {
-  return {
-    names:state.names,
-  }
-}
 
 export class ConnectedList extends React.Component{
   render = () => {
@@ -23,8 +17,12 @@ export class ConnectedList extends React.Component{
         }
       </div>
     )
-      }
+  }
 };
+
+const mapStateToProps = (state) => {
+  return {names:state.timerNames}
+}
 
 const List = connect(mapStateToProps)(ConnectedList);
 

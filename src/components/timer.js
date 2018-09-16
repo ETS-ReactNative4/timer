@@ -1,27 +1,13 @@
 import React from 'react';
 import "./index.css";
 import {connect} from 'react-redux';
-import {toggleRun} from '../actions/toggleRunning';
-import {deleteTimer} from '../actions/deleteTimer';
-import {changeName} from '../actions/changeName';
-import {incrementTime} from '../actions/incrementTime';
+import toggleRun from '../actions/actions-toggleRunning';
+import deleteTimer from '../actions/actions-deleteTimer';
+import changeName from '../actions/actions-changeName';
+import incrementTime from '../actions/actions-incrementTime';
+import resetTimer from '../actions/actions-resetTimer';
+import { bindActionCreators } from 'redux';
 const uuidv1 = require('uuid/v1');
-
-const mapDispatchToProps = dispatch => {
-  return {
-    toggleRun: obj => dispatch(toggleRun(obj)),
-    deleteTimer: obj => dispatch(deleteTimer(obj)),
-    rename: obj => dispatch(changeName(obj)),
-    increase: obj => dispatch(incrementTime(obj)),
-  };
-};
-
-const mapStateToProps = state => {
-  return {
-    times: state.times,
-    names: state.names
-  }
-}
 
 const cnv = (e) => {
   if(null==e)return "00";
@@ -55,7 +41,7 @@ export class Timercomp extends React.Component{
       if (this.state.e.running === false) {
         return;
       }
-      this.props.increase(this.state.e.id);
+      this.props.incrementTime(this.state.e.id);
       this.update();
     },1000);
   }
@@ -79,6 +65,11 @@ export class Timercomp extends React.Component{
     this.props.rename([x, "COMPLETE COMPONENT"])
   }
 
+  reset = () => {
+    let x = this.state.e.id;
+    this.props.resetTimer(x);
+  }
+
   btn = (i) => {
     if (i === true) {
       return <button class = "red btn" onClick={this.toggle}> Stop </button>
@@ -96,9 +87,21 @@ export class Timercomp extends React.Component{
         <p> </p> 
         <button class="cbtn" onClick={this.delete} key={uuidv1()}>Delete</button>
         <button class="cbtn" onClick={this.rename} key = {uuidv1()} > Rename </button>
+        <button class="cbtn" onClick={this.reset} key = {uuidv1()} > Reset </button>
         <p></p>
       </div>
     )
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({toggleRun,deleteTimer,changeName,incrementTime,resetTimer},dispatch);
+};
+
+const mapStateToProps = state => {
+  return {
+    times: state.timerValues,
+    names: state.timerNames
   }
 }
 
