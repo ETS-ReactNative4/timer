@@ -5,7 +5,7 @@ import { createStore, applyMiddleware } from 'redux';
 import rootReducer from './reducers';
 import { Provider } from 'react-redux';
 
-let store = createStore(rootReducer);
+let store = applyMiddleware()(createStore)(rootReducer);
 
 ReactDOM.render(
   <Provider store={store}>
